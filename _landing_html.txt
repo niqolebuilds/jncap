@@ -1,0 +1,124 @@
+<!-- ============================================================
+     LANDING — THE LONG MEADOW
+     ============================================================ -->
+<div id="landing" class="landing">
+  <div class="landing-glow"></div>
+
+  <div class="hills h3" data-depth="6"><svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+    <path fill="#10231e" d="M0,224 C160,160 280,240 460,208 C640,176 760,96 960,128 C1160,160 1280,240 1440,192 L1440,320 L0,320 Z"/></svg></div>
+  <div class="mist m1"></div>
+  <div class="hills h2" data-depth="14"><svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+    <path fill="#0c1b16" d="M0,256 C200,180 360,260 560,232 C760,204 880,140 1080,168 C1240,190 1360,250 1440,224 L1440,320 L0,320 Z"/></svg></div>
+  <div class="mist m2"></div>
+  <div class="hills h1" data-depth="26"><svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+    <path fill="#071009" d="M0,288 C240,210 420,290 640,258 C860,226 1000,180 1200,214 C1330,236 1400,270 1440,256 L1440,320 L0,320 Z"/></svg></div>
+
+  <div class="flora" id="flora"></div>
+  <div class="fireflies" id="fireflies"></div>
+
+  <div class="landing-content">
+    <div class="landing-eyebrow"><span class="dot"></span>N &amp; J Capital · Est. Jun 2026</div>
+    <div class="landing-head">What we tend quietly now<br>is <em>who we become</em> in 2027.</div>
+    <div class="landing-sub">Inside is everything we've committed to grow — our pool, our rules, our record. Capital compounds slowly, then all at once. So does trust.</div>
+
+    <div class="proj">
+      <div class="p-block"><div class="p-label">Planted · Today</div><div class="p-val" id="lp-now">$0</div></div>
+      <div class="p-arrow">⟶</div>
+      <div class="p-block"><div class="p-label">Horizon · May 2027</div><div class="p-val accent" id="lp-target">$0</div></div>
+      <div class="p-arrow">⟶</div>
+      <div class="p-block"><div class="p-label">Final Gate In</div><div class="p-val" id="lp-days">—</div></div>
+    </div>
+
+    <div class="horizon">
+      <div class="horizon-line">
+        <div class="horizon-fill" id="lp-fill" style="width:0%"></div>
+        <div class="horizon-dot" id="lp-dot" style="left:0%"><div class="horizon-here">You are here</div></div>
+      </div>
+      <div class="horizon-labels"><span>Jun 2026 · Seed</span><span id="lp-month-label">Month —</span><span>May 2027 · Verdict</span></div>
+    </div>
+
+    <button class="landing-cta" onclick="enterApp()">Step into the plan<span class="cta-orb">→</span></button>
+    <div class="landing-foot">A private fund of two · Discipline is the yield</div>
+  </div>
+</div>
+<script>
+document.body.classList.add('no-scroll');
+function enterApp(){
+  document.body.classList.remove('no-scroll');
+  var l=document.getElementById('landing');
+  l.classList.add('landing-hide');
+  setTimeout(function(){ l.style.display='none'; },900);
+}
+(function(){
+  // fireflies
+  var wrap=document.getElementById('fireflies');
+  for(var i=0;i<18;i++){
+    var s=document.createElement('span');
+    s.style.left=(Math.random()*100)+'%';
+    s.style.top=(30+Math.random()*55)+'%';
+    s.style.animationDelay=(Math.random()*6)+'s';
+    s.style.animationDuration=(5+Math.random()*4)+'s';
+    wrap.appendChild(s);
+  }
+  // wildflowers
+  var flora=document.getElementById('flora');
+  var cols=['#E8C64A','#C77DBA','#E98FA6','#9DD97B','#F0EFE4'];
+  for(var j=0;j<44;j++){
+    var f=document.createElement('span');
+    var c=cols[Math.floor(Math.random()*cols.length)];
+    var sz=(3+Math.random()*4);
+    f.style.width=sz+'px';f.style.height=sz+'px';
+    f.style.left=(Math.random()*100)+'%';
+    f.style.bottom=(Math.random()*9)+'vh';
+    f.style.background=c;
+    f.style.boxShadow='0 0 '+(4+Math.random()*6)+'px '+c;
+    f.style.opacity=(0.25+Math.random()*0.5);
+    f.style.animationDelay=(Math.random()*4)+'s';
+    f.style.animationDuration=(4+Math.random()*5)+'s';
+    flora.appendChild(f);
+  }
+  // parallax — hills drift with the pointer
+  document.getElementById('landing').addEventListener('pointermove',function(e){
+    var cx=(e.clientX/window.innerWidth-0.5), cy=(e.clientY/window.innerHeight-0.5);
+    document.querySelectorAll('.hills').forEach(function(h){
+      var d=parseFloat(h.getAttribute('data-depth'))||8;
+      h.style.transform='translate('+(cx*d*-1)+'px,'+(cy*d*-0.4)+'px)';
+    });
+  });
+  // timeline math — plan runs Jun 1 2026 → May 31 2027
+  var start=new Date('2026-06-01T00:00:00'), end=new Date('2027-05-31T23:59:59'), now=new Date();
+  var total=end-start, done=Math.min(Math.max(now-start,0),total);
+  var pct=done/total*100;
+  var daysLeft=Math.max(0,Math.ceil((end-now)/86400000));
+  var monthIdx=Math.min(12,Math.max(1,(now.getFullYear()-2026)*12+(now.getMonth()-5)+1));
+  document.getElementById('lp-days').textContent=daysLeft+' days';
+  document.getElementById('lp-month-label').textContent='Month '+monthIdx+' of 12';
+  var fillPct=Math.max(2,Math.min(98,pct));
+  setTimeout(function(){
+    document.getElementById('lp-fill').style.width=fillPct+'%';
+    document.getElementById('lp-dot').style.left=fillPct+'%';
+  },350);
+  // count-up — today's pool → 12-month horizon (reads saved values when available)
+  var pool=7100, target=35500;
+  try{
+    var p=parseFloat(localStorage.getItem('njcap:field:nicole_capital'))||0;
+    var j2=parseFloat(localStorage.getItem('njcap:field:jason_capital'))||0;
+    var t=parseFloat(localStorage.getItem('njcap:field:target_usdt'))||0;
+    if(p+j2>0)pool=p+j2;
+    if(t>0)target=t;
+  }catch(e){}
+  function countUp(el,to,ms){
+    var t0=null;
+    function step(ts){
+      if(!t0)t0=ts;
+      var k=Math.min(1,(ts-t0)/ms), eased=1-Math.pow(1-k,3);
+      el.textContent='$'+Math.round(to*eased).toLocaleString();
+      if(k<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  countUp(document.getElementById('lp-now'),pool,1400);
+  countUp(document.getElementById('lp-target'),target,2200);
+})();
+</script>
+

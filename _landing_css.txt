@@ -1,0 +1,133 @@
+/* ============================================================
+   LANDING — THE LONG MEADOW
+   futuristic horizon · touching grass
+   ============================================================ */
+body.no-scroll{overflow:hidden;height:100vh;}
+.landing{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 120vw 55vh at 50% 74%, rgba(226,240,216,0.10), transparent 62%),
+    linear-gradient(180deg,#070d12 0%,#0a141a 32%,#0d1d1c 56%,#11271f 80%,#152e22 100%);
+  transition:opacity .9s ease;
+}
+.landing.landing-hide{opacity:0;pointer-events:none;}
+
+/* horizon glow — the light you're walking toward */
+.landing-glow{
+  position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);
+  width:110vw;height:44vh;border-radius:50%;
+  background:radial-gradient(ellipse at center, rgba(214,235,206,0.16) 0%, rgba(185,240,78,0.07) 42%, transparent 70%);
+  pointer-events:none;filter:blur(12px);
+}
+
+/* rolling hills — layered SVG, parallax on pointer */
+.hills{position:absolute;left:-4vw;right:-4vw;pointer-events:none;will-change:transform;transition:transform .3s ease-out;}
+.hills svg{display:block;width:108vw;height:30vh;}
+.hills.h3{bottom:20vh;opacity:.55;filter:blur(2.5px);}
+.hills.h2{bottom:9vh;opacity:.82;filter:blur(0.6px);}
+.hills.h1{bottom:0;}
+
+/* drifting mist bands */
+.mist{position:absolute;left:0;right:0;height:12vh;pointer-events:none;opacity:.5;
+  background:linear-gradient(90deg,transparent, rgba(223,236,225,0.10) 30%, rgba(223,236,225,0.04) 62%, transparent);
+  animation:mist-drift 28s ease-in-out infinite alternate;}
+.mist.m1{bottom:22vh;animation-duration:34s;}
+.mist.m2{bottom:11vh;animation-duration:23s;animation-delay:-9s;opacity:.35;}
+@keyframes mist-drift{from{transform:translateX(-6vw);}to{transform:translateX(6vw);}}
+
+/* wildflowers swaying in the foreground */
+.flora{position:absolute;left:0;right:0;bottom:0;height:24vh;pointer-events:none;z-index:2;}
+.flora span{position:absolute;border-radius:50%;
+  transform-origin:50% 100%;animation:sway 6s ease-in-out infinite alternate;}
+@keyframes sway{from{transform:rotate(-4deg) translateY(0);}to{transform:rotate(5deg) translateY(-2px);}}
+
+/* fireflies */
+.fireflies{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.fireflies span{
+  position:absolute;width:3px;height:3px;border-radius:50%;
+  background:#B9F04E;box-shadow:0 0 6px 2px rgba(185,240,78,0.6);
+  opacity:0;animation:firefly-float 7s ease-in-out infinite;
+}
+@keyframes firefly-float{
+  0%{transform:translateY(0) translateX(0);opacity:0;}
+  20%{opacity:.85;}
+  50%{transform:translateY(-26px) translateX(10px);opacity:.45;}
+  80%{opacity:.85;}
+  100%{transform:translateY(-48px) translateX(-8px);opacity:0;}
+}
+
+/* content */
+.landing-content{
+  position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;
+  text-align:center;padding:0 24px 9vh;max-width:880px;
+  text-shadow:0 2px 24px rgba(0,0,0,.45);
+}
+.landing-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(243,247,244,.55);
+  border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 18px;
+  background:rgba(10,18,16,.35);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  margin-bottom:26px;
+}
+.landing-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#B9F04E;box-shadow:0 0 10px #B9F04E;animation:pulse-dot 2.4s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:.3;}}
+.landing-head{
+  font-family:'Playfair Display',serif;font-weight:600;color:#F3F7F4;
+  font-size:clamp(30px,5.2vw,58px);line-height:1.14;letter-spacing:-0.01em;margin-bottom:16px;
+}
+.landing-head em{font-style:italic;color:#D6EFA0;}
+.landing-sub{font-size:14px;line-height:1.7;color:rgba(243,247,244,.62);max-width:540px;margin-bottom:32px;}
+
+/* projection strip — today → the horizon */
+.proj{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;
+  font-family:'JetBrains Mono',monospace;margin-bottom:32px;}
+.proj .p-block{text-align:center;padding:12px 22px;border-radius:16px;
+  background:rgba(12,22,18,.42);border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+.proj .p-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(243,247,244,.45);margin-bottom:5px;}
+.proj .p-val{font-size:20px;font-weight:500;color:#F3F7F4;}
+.proj .p-val.accent{color:#B9F04E;text-shadow:0 0 18px rgba(185,240,78,.35);}
+.proj .p-arrow{color:rgba(243,247,244,.35);font-size:18px;}
+
+/* horizon track — where you are on the 12-month walk */
+.horizon{width:min(560px,86vw);margin-bottom:36px;}
+.horizon-line{position:relative;height:2px;background:rgba(255,255,255,.12);border-radius:2px;}
+.horizon-fill{position:absolute;left:0;top:0;bottom:0;border-radius:2px;
+  background:linear-gradient(90deg,#8FE066,#B9F04E);box-shadow:0 0 12px rgba(185,240,78,.5);
+  transition:width 1.8s cubic-bezier(.22,.8,.3,1);}
+.horizon-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;
+  background:#B9F04E;box-shadow:0 0 0 4px rgba(185,240,78,.18),0 0 16px rgba(185,240,78,.7);
+  transition:left 1.8s cubic-bezier(.22,.8,.3,1);}
+.horizon-here{position:absolute;top:-26px;left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:#B9F04E;}
+.horizon-labels{display:flex;justify-content:space-between;margin-top:10px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(243,247,244,.4);}
+
+/* CTA — glass pill, Bloom-style */
+.landing-cta{
+  display:inline-flex;align-items:center;gap:14px;padding:8px 8px 8px 26px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(12,22,18,.45);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  color:#F3F7F4;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;letter-spacing:.01em;
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.landing-cta .cta-orb{
+  display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,#B9F04E,#8FE066);color:#05090f;font-weight:700;font-size:16px;
+  box-shadow:0 6px 24px rgba(185,240,78,.4);transition:transform .25s ease;
+}
+.landing-cta:hover{transform:translateY(-2px);border-color:rgba(185,240,78,.5);box-shadow:0 14px 40px rgba(0,0,0,.4);}
+.landing-cta:hover .cta-orb{transform:translateX(3px);}
+.landing-cta:active{transform:translateY(0);}
+.landing-foot{margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:rgba(243,247,244,.3);}
+
+@media(max-width:560px){
+  .proj .p-arrow{display:none;}
+  .proj{gap:10px;}
+  .proj .p-block{padding:10px 16px;}
+  .landing-content{padding-bottom:6vh;}
+}
+
